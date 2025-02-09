@@ -1,99 +1,68 @@
-// Continuous smooth scrolling functionality for the gallery
 const gallery = document.querySelector('.gallery');
 let isScrolling = false;
-let scrollSpeed = 2; // Adjust scroll speed (pixels per frame)
+let scrollSpeed = 4;
 let animationFrameId;
 
-// Clone gallery items and append them to the gallery for seamless looping
+// Clone gallery items for seamless looping
 function cloneGalleryItems() {
-    const galleryItems = gallery.innerHTML; // Get all gallery items
-    gallery.innerHTML += galleryItems; // Append a copy of the items
+    const galleryItems = gallery.innerHTML;
+    gallery.innerHTML += galleryItems;
 }
-
-cloneGalleryItems(); // Call the function to clone items
+cloneGalleryItems();
 
 // Function to start continuous scrolling
 function startContinuousScroll() {
-    if (isScrolling) return; // Prevent multiple loops
+    if (isScrolling) return;
     isScrolling = true;
 
     function scrollGallery() {
-        // Scroll to the right
-        gallery.scrollBy({ left: scrollSpeed, behavior: 'auto' });
-
-        // If near the end of the cloned items, reset scroll position seamlessly
+        gallery.scrollLeft += scrollSpeed;
         if (gallery.scrollLeft >= gallery.scrollWidth / 2) {
-            gallery.scrollTo({ left: 0, behavior: 'instant' });
+            gallery.scrollLeft = 0;
         }
-
-        animationFrameId = requestAnimationFrame(scrollGallery); // Continue scrolling
+        animationFrameId = requestAnimationFrame(scrollGallery);
     }
-
-    scrollGallery(); // Start the scrolling loop
+    scrollGallery();
 }
 
-// Function to stop continuous scrolling
+// Function to stop scrolling
 function stopContinuousScroll() {
     cancelAnimationFrame(animationFrameId);
     isScrolling = false;
 }
 
-// Detect when the gallery section is in view
+// Detect when gallery is in view
 const observer = new IntersectionObserver(
     (entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Start continuous scrolling when the gallery is in view
                 startContinuousScroll();
+                playVideosInView();
             } else {
-                // Stop continuous scrolling when the gallery is out of view
                 stopContinuousScroll();
             }
         });
     },
-    { threshold: 0.5 } // Trigger when 50% of the gallery is visible
+    { threshold: 0.5 }
 );
-
-// Observe the gallery section
 observer.observe(gallery);
 
-// Allow manual scrolling
-let scrollTimeout;
-let isManualScroll = false;
-
-gallery.addEventListener('scroll', () => {
-    if (!isManualScroll) {
-        isManualScroll = true; // Set flag to indicate manual scrolling
-        if (isScrolling) {
-            stopContinuousScroll(); // Stop auto-scrolling if the user manually scrolls
-        }
-    }
-
-    // Restart continuous scrolling after manual scrolling stops
-    clearTimeout(scrollTimeout); // Clear any existing timeout
-    scrollTimeout = setTimeout(() => {
-        isManualScroll = false; // Reset flag after delay
-        if (!isScrolling) {
-            startContinuousScroll(); // Restart continuous scrolling after a delay
-        }
-    }, 0); // Adjust the delay time (in milliseconds) as needed
-});
-
-// Handle touch events for mobile devices
-gallery.addEventListener('touchstart', () => {
-    isManualScroll = true; // Set flag to indicate manual scrolling
-    if (isScrolling) {
-        stopContinuousScroll(); // Stop auto-scrolling on touch start
-    }
-});
-
-gallery.addEventListener('touchend', () => {
-    // Restart continuous scrolling after touch ends
-    clearTimeout(scrollTimeout); // Clear any existing timeout
-    scrollTimeout = setTimeout(() => {
-        isManualScroll = false; // Reset flag after delay
-        if (!isScrolling) {
-            startContinuousScroll(); // Restart continuous scrolling after a delay
-        }
-    }, 0); // Adjust the delay time (in milliseconds) as needed
-});
+// Function to autoplay videos in view
+function playVideosInView() {
+    const videos = gallery.querySelectorAll('video');
+    videos.forEach(video => {
+        const videoObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+        videoObserver.observe(video);
+    });
+}
