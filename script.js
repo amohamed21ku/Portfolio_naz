@@ -1,7 +1,7 @@
 // Continuous smooth scrolling functionality for the gallery
 const gallery = document.querySelector('.gallery');
 let isScrolling = false;
-let scrollSpeed = 4; // Adjust scroll speed (pixels per frame)
+let scrollSpeed = 2; // Adjust scroll speed (pixels per frame)
 let animationFrameId;
 
 // Clone gallery items and append them to the gallery for seamless looping
@@ -59,15 +59,39 @@ observer.observe(gallery);
 
 // Allow manual scrolling
 let scrollTimeout;
+let isManualScroll = false;
 
 gallery.addEventListener('scroll', () => {
-    if (isScrolling) {
-        stopContinuousScroll(); // Stop auto-scrolling if the user manually scrolls
+    if (!isManualScroll) {
+        isManualScroll = true; // Set flag to indicate manual scrolling
+        if (isScrolling) {
+            stopContinuousScroll(); // Stop auto-scrolling if the user manually scrolls
+        }
     }
 
     // Restart continuous scrolling after manual scrolling stops
     clearTimeout(scrollTimeout); // Clear any existing timeout
     scrollTimeout = setTimeout(() => {
+        isManualScroll = false; // Reset flag after delay
+        if (!isScrolling) {
+            startContinuousScroll(); // Restart continuous scrolling after a delay
+        }
+    }, 0); // Adjust the delay time (in milliseconds) as needed
+});
+
+// Handle touch events for mobile devices
+gallery.addEventListener('touchstart', () => {
+    isManualScroll = true; // Set flag to indicate manual scrolling
+    if (isScrolling) {
+        stopContinuousScroll(); // Stop auto-scrolling on touch start
+    }
+});
+
+gallery.addEventListener('touchend', () => {
+    // Restart continuous scrolling after touch ends
+    clearTimeout(scrollTimeout); // Clear any existing timeout
+    scrollTimeout = setTimeout(() => {
+        isManualScroll = false; // Reset flag after delay
         if (!isScrolling) {
             startContinuousScroll(); // Restart continuous scrolling after a delay
         }
