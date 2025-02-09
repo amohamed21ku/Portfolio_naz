@@ -1,24 +1,53 @@
 html {
-    scroll-behavior: smooth; /* Enables smooth scrolling */
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #121212;
+    background: linear-gradient(-45deg, #6e45e2, #584a88, #6e45e2, #584a88);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     color: white;
     text-align: center;
     line-height: 1.6;
     overflow-x: hidden;
 }
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 header {
-    background: linear-gradient(135deg, #6e45e2, #88d3ce);
-    padding: 60px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('header-bg.jpg') no-repeat center center/cover;
+    z-index: -1;
+    filter: blur(5px);
 }
 
 header h1 {
     font-size: 4rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 nav ul {
@@ -37,18 +66,28 @@ nav a {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1rem;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 nav a:hover {
     color: #ffcc00;
+    transform: scale(1.1);
 }
 
 section {
     margin: 80px 0;
     padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 2s ease-in-out;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 h2 {
     font-size: 2.5rem;
@@ -57,11 +96,9 @@ h2 {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-p {
-    font-size: 1.1rem;
-    max-width: 800px;
-    margin: 0 auto;
-    animation: fadeIn 3s ease-in-out;
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .gallery {
@@ -73,32 +110,37 @@ p {
     perspective: 1000px;
 }
 
-.gallery video{
-    width: 200px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-
-}
-.gallery img {
+.gallery img, .gallery video {
     width: 300px;
     height: 300px;
     object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    transform-style: preserve-3d;
 }
 
 .gallery img:hover, .gallery video:hover {
-    transform: scale(1.05);
+    transform: scale(1.1) rotateY(10deg) rotateX(10deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+#cv {
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin: 40px auto;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+#cv iframe {
+    border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -115,7 +157,7 @@ p {
 .modal-content {
     max-width: 90%;
     max-height: 90%;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .close {
@@ -126,11 +168,13 @@ p {
     font-size: 2rem;
     cursor: pointer;
 }
+
 .media-container {
     position: relative;
     text-align: center;
     margin-bottom: 20px;
 }
+
 .media-tag {
     font-size: 0.9rem;
     color: #ccc;
@@ -147,33 +191,105 @@ p {
 }
 
 .insta-icon {
-    font-size: 10px; /* Adjust size as needed */
-    color: white; /* Instagram logo color */
+    font-size: 10px;
+    color: white;
     transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .insta-icon:hover {
-    transform: scale(1.1); /* Add a hover effect */
-    color: #e1306c; /* Instagram gradient color */
+    transform: scale(1.1);
+    color: #e1306c;
+}
+#contact {
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin: 40px auto;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.contact-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.contact-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    color: #09070d;
+    transition: color 0.3s ease-in-out;
+}
+
+.contact-item:hover i {
+    color: #88d3ce;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background: #6e45e2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background: #88d3ce;
+}
+
+#form-status {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #ffcc00;
 }
