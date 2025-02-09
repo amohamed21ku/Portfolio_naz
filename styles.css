@@ -41,7 +41,7 @@ header::before {
 }
 
 header h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     animation: float 3s ease-in-out infinite;
 }
 
@@ -109,8 +109,18 @@ h2 {
     margin-top: 30px;
     perspective: 1000px;
 }
+.gallery video{
+    width: 300px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
 
-.gallery img, .gallery video {
+.gallery img {
     width: 300px;
     height: 300px;
     object-fit: cover;
@@ -205,24 +215,51 @@ h2 {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     margin: 40px auto;
-    max-width: 600px;
+    max-width: 800px; /* Increase this value to make the box wider */
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .contact-info {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between items */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
 }
 
 .contact-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+    white-space: nowrap; /* Prevent text from wrapping */
 }
+
+footer {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+footer {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
 
 .contact-item:hover {
     transform: translateY(-5px);
@@ -273,23 +310,7 @@ h2 {
     resize: vertical;
 }
 
-button[type="submit"] {
-    background: #6e45e2;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease-in-out;
-}
 
-button[type="submit"]:hover {
-    background: #88d3ce;
-}
 
-#form-status {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #ffcc00;
-}
+
+
