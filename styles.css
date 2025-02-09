@@ -108,6 +108,12 @@ h2 {
     padding: 10px 0; /* Add some padding for better spacing */
     scroll-behavior: smooth; /* Smooth scrolling */
     white-space: nowrap; /* Prevent wrapping */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.gallery::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
 }
 
 .gallery .media-container {
@@ -116,27 +122,10 @@ h2 {
     text-align: center;
 }
 
-.gallery img {
-    width: 100%; /* Ensure images and videos take up the full width of their container */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 15px;
-    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transform-style: preserve-3d;
-}
-.gallery::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
-}
-
-.gallery img:hover, .gallery video:hover {
-    transform: scale(1.1) rotateY(10deg) rotateX(10deg);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
-}
-.gallery video{
-    width: 250px;
-    height: 500px;
-    object-fit: cover;
+.gallery img  {
+    width: 100%; /* Ensure images take up the full width of their container */
+    height: 300px; /* Fixed height for images */
+    object-fit: cover; /* Maintain aspect ratio */
     border-radius: 15px;
     transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -144,8 +133,19 @@ h2 {
     transform-style: preserve-3d;
 }
 
+.gallery video {
+    width: 300px; /* Fixed width for videos */
+    height: 500px; /* Fixed height for videos */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 15px;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
 
-.gallery img:hover, .gallery video:hover {
+.gallery img:hover,
+.gallery video:hover {
     transform: scale(1.1) rotateY(10deg) rotateX(10deg);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
@@ -224,43 +224,32 @@ h2 {
     transform: scale(1.1);
     color: #e1306c;
 }
-    #contact {
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin: 40px auto;
-            max-width: 800px; /* Increase this value to make the box wider */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
 
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px; /* Space between items */
-            flex-wrap: nowrap; /* Prevent wrapping to the next line */
-        }
+#contact {
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin: 40px auto;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
 
-        .contact-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px; /* Space between icon and text */
-            white-space: nowrap; /* Prevent text from wrapping */
-        }
+.contact-info {
+    display: inline-block;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+    gap: 5px; /* Space between items */
+}
 
-        footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
 
-        footer p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #ccc;
-        }
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
 footer {
     background: rgba(0, 0, 0, 0.5);
     padding: 20px;
@@ -273,7 +262,6 @@ footer p {
     font-size: 0.9rem;
     color: #ccc;
 }
-
 
 .contact-item:hover {
     transform: translateY(-5px);
@@ -323,8 +311,3 @@ footer p {
 .form-group textarea {
     resize: vertical;
 }
-
-
-
-
-
