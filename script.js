@@ -1,19 +1,26 @@
-// Update your script.js
+// Updated script.js
 const gallery = document.querySelector('.gallery');
 let isScrolling = false;
-let scrollSpeed = 2; // Reduce scroll speed for mobile
+let scrollSpeed = 2; // Scroll speed for desktop
 let animationFrameId;
 
-// Clone gallery items for seamless looping
-function cloneGalleryItems() {
-    const galleryItems = gallery.innerHTML;
-    gallery.innerHTML += galleryItems;
+// Function to detect mobile devices
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
-cloneGalleryItems();
 
-// Function to start continuous scrolling
+// Clone gallery items for seamless looping (only for desktop)
+if (!isMobileDevice()) {
+    function cloneGalleryItems() {
+        const galleryItems = gallery.innerHTML;
+        gallery.innerHTML += galleryItems;
+    }
+    cloneGalleryItems();
+}
+
+// Function to start continuous scrolling (only for desktop)
 function startContinuousScroll() {
-    if (isScrolling) return;
+    if (isScrolling || isMobileDevice()) return; // Disable auto-scrolling on mobile
     isScrolling = true;
 
     function scrollGallery() {
@@ -32,21 +39,23 @@ function stopContinuousScroll() {
     isScrolling = false;
 }
 
-// Detect when gallery is in view
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                startContinuousScroll();
-                playVideosInView();
-            } else {
-                stopContinuousScroll();
-            }
-        });
-    },
-    { threshold: 0.5 }
-);
-observer.observe(gallery);
+// Detect when gallery is in view (only for desktop)
+if (!isMobileDevice()) {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startContinuousScroll();
+                    playVideosInView();
+                } else {
+                    stopContinuousScroll();
+                }
+            });
+        },
+        { threshold: 0.5 }
+    );
+    observer.observe(gallery);
+}
 
 // Function to autoplay videos in view
 function playVideosInView() {
