@@ -101,6 +101,22 @@ h2 {
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Add this to your styles.css */
+@media (max-width: 768px) {
+    .gallery {
+        overflow-x: scroll; /* Enable horizontal scrolling on mobile */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    .gallery .media-container {
+        width: 200px; /* Adjust the width for smaller screens */
+    }
+
+    .gallery video {
+        width: 200px; /* Adjust the width for smaller screens */
+        height: 300px; /* Adjust the height for smaller screens */
+    }
+}
 .gallery {
     display: flex;
     overflow-x: auto; /* Enable horizontal scrolling */
