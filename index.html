@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semra Naz Aral - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Semra Naz Aral</h1>
+        <p>Social Media Marketer | Content Creator</p>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Third-year Media and Visual Arts student with expertise in digital marketing, social media content creation, and SEO optimization. Passionate about crafting engaging content and driving brand growth through innovative strategies.</p>
+    </section>
+    
+    <section id="portfolio">
+        <h2>My Work</h2>
+        <h3>Photos</h3>
+        <div class="gallery">
+            <img src="PHOTO-2025-02-09-17-30-33.jpg" alt="Portfolio Work 1">
+            <img src="PHOTO-2025-02-09-17-34-53.jpg" alt="Portfolio Work 2">
+            <img src="PHOTO-2025-02-09-17-33-19.png" alt="Portfolio Work 3">
+            <img src="PHOTO-2025-02-09-17-33-41.jpg" alt="Portfolio Work 4">
+            <img src="PHOTO-2025-02-09-17-33-39.jpg" alt="Portfolio Work 5">
+            <img src="PHOTO-2025-02-09-17-33-19.png" alt="Portfolio Work 6">
+        </div>
+        
+        <h3>Videos</h3>
+        <div class="gallery">
+            <video autoplay muted loop>
+                <source src="VIDEO-2025-02-09-17-30-24.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video autoplay muted loop>
+                <source src="video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video autoplay muted loop>
+                <source src="video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:naz.aralnaz@gmail.com">naz.aralnaz@gmail.com</a></p>
+        <p>Let's connect and create something amazing together!</p>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <video class="modal-content" id="modal-video" controls>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalVideo = document.getElementById('modal-video');
+        const closeBtn = document.querySelector('.close');
+
+        // Open modal for images
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalImg.src = img.src;
+                modalImg.style.display = 'block';
+                modalVideo.style.display = 'none';
+            });
+        });
+
+        // Open modal for videos
+        document.querySelectorAll('.gallery video').forEach(video => {
+            video.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalVideo.src = video.querySelector('source').src;
+                modalVideo.style.display = 'block';
+                modalImg.style.display = 'none';
+                modalVideo.play();
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            modalVideo.pause();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                modalVideo.pause();
+            }
+        });
+    </script>
+</body>
+</html>
