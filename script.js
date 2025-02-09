@@ -1,6 +1,7 @@
+// Update your script.js
 const gallery = document.querySelector('.gallery');
 let isScrolling = false;
-let scrollSpeed = 4;
+let scrollSpeed = 2; // Reduce scroll speed for mobile
 let animationFrameId;
 
 // Clone gallery items for seamless looping
