@@ -38,28 +38,14 @@ function stopContinuousScroll() {
     cancelAnimationFrame(animationFrameId);
     isScrolling = false;
 }
-
-// Detect when gallery is in view (only for desktop)
-if (!isMobileDevice()) {
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    startContinuousScroll();
-                    playVideosInView();
-                } else {
-                    stopContinuousScroll();
-                }
-            });
-        },
-        { threshold: 0.5 }
-    );
-    observer.observe(gallery);
+// Function to detect mobile devices
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 // Function to autoplay videos in view
 function playVideosInView() {
-    const videos = gallery.querySelectorAll('video');
+    const videos = document.querySelectorAll('.gallery video');
     videos.forEach(video => {
         const videoObserver = new IntersectionObserver(
             (entries) => {
@@ -75,4 +61,20 @@ function playVideosInView() {
         );
         videoObserver.observe(video);
     });
+}
+
+// Initialize video autoplay when the gallery is in view
+const gallery = document.querySelector('.gallery');
+if (gallery) {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    playVideosInView();
+                }
+            });
+        },
+        { threshold: 0.5 }
+    );
+    observer.observe(gallery);
 }
